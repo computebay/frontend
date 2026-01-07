@@ -19,7 +19,7 @@ const App = () => {
 
         <TopNav />
 
-        <main className="relative z-10 mx-auto max-w-7xl px-6">
+        <main className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/earlyAccess" element={<EarlyAccess />} />
@@ -27,16 +27,16 @@ const App = () => {
           </Routes>
         </main>
 
-        <footer className="relative z-10 border-t border-white/5 bg-black py-16">
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="flex flex-col justify-between gap-8 md:flex-row md:items-center">
+        <footer className="relative z-10 border-t border-white/5 bg-black py-12 sm:py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="flex flex-col justify-between gap-6 sm:gap-8 md:flex-row md:items-center">
               <div>
-                <div className="text-lg font-black uppercase tracking-tighter text-white">Computebay</div>
+                <div className="text-base sm:text-lg font-black uppercase tracking-tighter text-white">Computebay</div>
                 <p className="text-xs font-mono text-slate-600 uppercase tracking-widest mt-1">Systems_Global // v1.0.4</p>
               </div>
-              <div className="flex items-center gap-6 font-mono text-[10px] uppercase tracking-widest text-slate-500">
-                <span className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="flex items-center gap-4 sm:gap-6 font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500">
+                <span className="flex items-center gap-1 sm:gap-2">
+                  <span className="h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   Network_Operational
                 </span>
                 <span className="hover:text-white cursor-pointer transition-colors">Twitter</span>

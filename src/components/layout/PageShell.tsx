@@ -16,12 +16,12 @@ const PageShell = ({ children }: PropsWithChildren) => {
       <TopNav />
       
       {/* Asymmetric Container: Wide but shifted */}
-      <main className="relative z-10 w-full px-6 md:px-12 lg:pl-20 lg:pr-10 mx-auto max-w-[1600px]">
+      <main className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:pl-12 lg:pr-6 mx-auto max-w-[1600px]">
         {children}
       </main>
 
-      <footer className="relative z-10 mt-40 border-t border-white/5 bg-black py-12 px-6 lg:pl-20">
-        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-600">
+      <footer className="relative z-10 mt-32 sm:mt-40 border-t border-white/5 bg-black py-8 sm:py-12 px-4 sm:px-6 lg:pl-12">
+        <div className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-600">
           Terminal_ID: CB-GLOBAL-OS // {new Date().getFullYear()}
         </div>
       </footer>

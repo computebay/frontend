@@ -60,25 +60,25 @@ const EarlyAccess = () => {
       </div>
 
       {/* 2. CONTENT LAYER */}
-      <div className="relative z-10 mx-auto max-w-7xl px-10 py-20">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
         <button
           type="button"
           onClick={() => navigate('/')}
-          className="mb-10 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 hover:text-emerald-400 transition-colors"
+          className="mb-8 sm:mb-10 inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-slate-500 hover:text-emerald-400 transition-colors"
         >
-          <ArrowLeft size={14} />
+          <ArrowLeft size={12} className="sm:w-4 sm:h-4" />
           Back to overview
         </button>
 
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] items-start">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[1.1fr_1fr] items-start">
           {/* Copy column */}
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-3 border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.25em] text-emerald-300">
-              <Rocket size={14} />
+          <div className="space-y-4 sm:space-y-6">
+            <div className="inline-flex items-center gap-2 sm:gap-3 border border-emerald-500/40 bg-emerald-500/10 px-2 sm:px-3 py-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-emerald-300">
+              <Rocket size={12} className="sm:w-4 sm:h-4" />
               Early console access
             </div>
 
-            <h1 className="text-4xl font-black uppercase tracking-tight text-white sm:text-5xl">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white sm:text-5xl">
               Be first to ship on the <span className="text-emerald-400">Computebay grid</span>.
             </h1>
 
@@ -87,33 +87,33 @@ const EarlyAccess = () => {
               stages. Share how you plan to use Computebay.
             </p>
 
-            <div className="grid gap-4 text-xs text-slate-300 sm:grid-cols-2">
+            <div className="grid gap-3 sm:gap-4 text-xs text-slate-300 sm:grid-cols-2">
               <div className="space-y-1">
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">For job submitters</div>
+                <div className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">For job submitters</div>
                 <p>Batch and simulation teams who want predictable pricing.</p>
               </div>
               <div className="space-y-1">
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">For contributors</div>
+                <div className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">For contributors</div>
                 <p>GPU and CPU owners who want to onboard hardware early.</p>
               </div>
             </div>
           </div>
 
           {/* Form column */}
-          <div className="border border-white/10 bg-[#050505]/80 backdrop-blur-md p-8 shadow-2xl">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/40">
-                <Mail size={18} />
+          <div className="border border-white/10 bg-[#050505]/80 backdrop-blur-md p-6 sm:p-8 shadow-2xl">
+            <div className="mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+              <div className="flex h-8 sm:h-9 w-8 sm:w-9 items-center justify-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/40">
+                <Mail size={16} className="sm:w-5 sm:h-5" />
               </div>
               <div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">Request invite</div>
+                <div className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">Request invite</div>
                 <div className="text-sm font-semibold text-white">Join the early registration list</div>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1.5">
-                <label htmlFor="email" className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">Work email</label>
+                <label htmlFor="email" className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">Work email</label>
                 <input
                   id="email"
                   type="email"
@@ -126,14 +126,14 @@ const EarlyAccess = () => {
               </div>
 
               <div className="space-y-1.5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">I am primarily a…</span>
-                <div className="grid grid-cols-3 gap-2 text-[11px]">
-                  {['developer', 'contributor', 'both'].map((opt) => (
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">I am primarily a…</span>
+                <div className="grid grid-cols-3 gap-1 sm:gap-2 text-[10px] sm:text-[11px]">
+                  {(['developer', 'contributor', 'both'] as const).map((opt) => (
                     <button
                       key={opt}
                       type="button"
-                      onClick={() => setRole(opt as any)}
-                      className={`border px-2 py-1 font-mono uppercase tracking-[0.15em] transition-colors ${
+                      onClick={() => setRole(opt)}
+                      className={`border px-1 sm:px-2 py-1 font-mono uppercase tracking-[0.15em] transition-colors ${
                         role === opt ? 'border-emerald-400 bg-emerald-500/10 text-emerald-300' : 'border-slate-700 bg-black/40 text-slate-400 hover:border-slate-500'
                       }`}
                     >
@@ -144,10 +144,10 @@ const EarlyAccess = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="notes" className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">What do you plan to run?</label>
+                <label htmlFor="notes" className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">What do you plan to run?</label>
                 <textarea
                   id="notes"
-                  rows={4}
+                  rows={3}
                   placeholder="e.g. nightly risk simulations..."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}

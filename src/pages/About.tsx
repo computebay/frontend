@@ -1,11 +1,8 @@
 "use client";
 import React from 'react';
-import { motion } from 'framer-motion';
 import { 
-    Cpu, Shield, Zap, Database, Layers, Network, 
-    Terminal, Lock, Coins, Box, Activity,
-    ArrowLeft, Server, Globe, Workflow, CpuIcon,
-    ArrowRightLeft, Gauge, Search
+    Shield, Zap, Layers, Lock, Box, Activity,
+    ArrowLeft, Globe, ArrowRightLeft, Gauge
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SparklesCore } from '../components/SparklesCore';
@@ -39,18 +36,18 @@ const About = () => {
                 <SparklesCore id="tsparticlesabout" background="transparent" minSize={0.4} maxSize={1} particleDensity={50} className="w-full h-full" particleColor="#10b981" speed={0.2} />
             </div>
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
                 <button 
                     onClick={() => navigate('/')}
-                    className="mb-12 flex items-center gap-2 text-[10px] uppercase text-slate-500 hover:text-emerald-400 transition-colors"
+                    className="mb-10 sm:mb-12 flex items-center gap-2 text-[9px] sm:text-[10px] uppercase text-slate-500 hover:text-emerald-400 transition-colors"
                 >
-                    <ArrowLeft size={14} /> System_Root
+                    <ArrowLeft size={12} className="sm:w-4 sm:h-4" /> System_Root
                 </button>
 
                 {/* LAYER 01: THE MANIFESTO (HOW IT HELPS) */}
-                <section className="mb-24 space-y-12">
-                    <div className="max-w-3xl space-y-6">
-                        <h1 className="text-6xl font-black text-white uppercase tracking-tighter italic leading-none">
+                <section className="mb-20 sm:mb-24 space-y-8 sm:space-y-12">
+                    <div className="max-w-3xl space-y-4 sm:space-y-6">
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter italic leading-none">
                             Decentralized <br /> <span className="text-emerald-500">Compute</span> Architecture.
                         </h1>
                         <p className="text-sm leading-relaxed text-slate-400 uppercase tracking-tight">
@@ -61,36 +58,36 @@ const About = () => {
                         </p>
                     </div>
 
-                    <div className="grid gap-4 md:grid-cols-3">
+                    <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                         {[
                             { t: "Cost Efficiency", d: "1/10th the price of AWS/Azure by eliminating hyperscaler margin and idle-state costs.", i: Gauge },
                             { t: "Native Isolation", d: "Zero-trust execution environment utilizing gVisor to intercept system calls at the kernel level.", i: Shield },
                             { t: "Fault Tolerance", d: "Automated job resumption and stateless worker matching via Consul-backed discovery.", i: Lock }
                         ].map((feat, i) => (
-                            <div key={i} className="p-6 border border-white/5 bg-[#050505]/50 backdrop-blur-sm">
-                                {React.createElement(feat.i, { size: 20, className: "text-emerald-500 mb-4" })}
-                                <h3 className="text-xs font-bold text-white uppercase mb-2">{feat.t}</h3>
-                                <p className="text-[10px] text-slate-500 leading-relaxed uppercase">{feat.d}</p>
+                            <div key={i} className="p-4 sm:p-6 border border-white/5 bg-[#050505]/50 backdrop-blur-sm">
+                                {React.createElement(feat.i, { size: 16, className: "text-emerald-500 mb-3 sm:mb-4" })}
+                                <h3 className="text-xs font-bold text-white uppercase mb-1 sm:mb-2">{feat.t}</h3>
+                                <p className="text-[9px] sm:text-[10px] text-slate-500 leading-relaxed uppercase">{feat.d}</p>
                             </div>
                         ))}
                     </div>
                 </section>
 
                 {/* LAYER 02: THE USER FLOW (DETAILED JOURNEYS) */}
-                <section className="mb-24 py-16 border-y border-white/5 bg-[#030303]/50">
-                    <div className="mb-12 text-center">
-                        <h2 className="text-[10px] text-emerald-500 tracking-[0.5em] uppercase font-bold mb-2">Protocol_Journeys</h2>
-                        <p className="text-xl font-black text-white uppercase italic">Two roles. One unified ledger.</p>
+                <section className="mb-20 sm:mb-24 py-12 sm:py-16 border-y border-white/5 bg-[#030303]/50">
+                    <div className="mb-10 sm:mb-12 text-center">
+                        <h2 className="text-[9px] sm:text-[10px] text-emerald-500 tracking-[0.5em] uppercase font-bold mb-1 sm:mb-2">Protocol_Journeys</h2>
+                        <p className="text-lg sm:text-xl font-black text-white uppercase italic">Two roles. One unified ledger.</p>
                     </div>
 
-                    <div className="grid gap-12 lg:grid-cols-2">
+                    <div className="grid gap-8 sm:gap-12 lg:grid-cols-2">
                         {/* Submitter Track */}
-                        <div className="space-y-8">
-                            <div className="flex items-center gap-3">
-                                <div className="h-1 bg-emerald-500 w-12" />
-                                <h3 className="text-lg font-black text-white uppercase italic tracking-widest">Job_Submitter (Dev)</h3>
+                        <div className="space-y-6 sm:space-y-8">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="h-1 bg-emerald-500 w-8 sm:w-12" />
+                                <h3 className="text-base sm:text-lg font-black text-white uppercase italic tracking-widest">Job_Submitter (Dev)</h3>
                             </div>
-                            <div className="grid gap-4 sm:grid-cols-1">
+                            <div className="grid gap-3 sm:gap-4 grid-cols-1">
                                 <StepCard 
                                     number="PHASE_01" 
                                     title="Onboarding & Credits" 
@@ -110,12 +107,12 @@ const About = () => {
                         </div>
 
                         {/* Contributor Track */}
-                        <div className="space-y-8">
-                            <div className="flex items-center gap-3">
-                                <div className="h-1 bg-sky-500 w-12" />
-                                <h3 className="text-lg font-black text-white uppercase italic tracking-widest">Compute_Contributor</h3>
+                        <div className="space-y-6 sm:space-y-8">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="h-1 bg-sky-500 w-8 sm:w-12" />
+                                <h3 className="text-base sm:text-lg font-black text-white uppercase italic tracking-widest">Compute_Contributor</h3>
                             </div>
-                            <div className="grid gap-4 sm:grid-cols-1">
+                            <div className="grid gap-3 sm:gap-4 grid-cols-1">
                                 <StepCard 
                                     number="PHASE_01" 
                                     title="Node Registration" 
@@ -137,41 +134,41 @@ const About = () => {
                 </section>
 
                 {/* LAYER 03: THE ORCHESTRATION LAYER (TECH SPECS) */}
-                <section className="mb-24 space-y-12">
-                    <div className="border-l-2 border-emerald-500 pl-4">
-                        <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">03. Orchestration_Engine</h2>
-                        <p className="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Underlying system design and services.</p>
+                <section className="mb-20 sm:mb-24 space-y-8 sm:space-y-12">
+                    <div className="border-l-2 border-emerald-500 pl-3 sm:pl-4">
+                        <h2 className="text-xl sm:text-2xl font-black text-white uppercase italic tracking-tighter">03. Orchestration_Engine</h2>
+                        <p className="text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-widest mt-1">Underlying system design and services.</p>
                     </div>
 
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                         {[
                             { t: "API Gateway", d: "Node.js/TS entry point handling routing, rate limiting, and JWT validation.", i: Globe },
                             { t: "Job Service", i: Layers, d: "Metadata management using Postgres with prioritized retry policies." },
                             { t: "Scheduler", i: Zap, d: "Stateless logic engine for worker matching with Consul leader election." },
                             { t: "Worker Agent", i: Box, d: "Lightweight daemon running isolated gVisor containers on the edge." }
                         ].map((svc, i) => (
-                            <div key={i} className="p-6 border border-white/5 bg-[#080808]">
-                                <svc.i size={18} className="text-emerald-500 mb-4 opacity-50" />
-                                <h4 className="text-[11px] font-bold text-white uppercase mb-2">{svc.t}</h4>
-                                <p className="text-[10px] font-mono text-slate-600 leading-relaxed uppercase">{svc.d}</p>
+                            <div key={i} className="p-4 sm:p-6 border border-white/5 bg-[#080808]">
+                                <svc.i size={16} className="text-emerald-500 mb-3 sm:mb-4 opacity-50" />
+                                <h4 className="text-[10px] sm:text-[11px] font-bold text-white uppercase mb-1 sm:mb-2">{svc.t}</h4>
+                                <p className="text-[9px] sm:text-[10px] font-mono text-slate-600 leading-relaxed uppercase">{svc.d}</p>
                             </div>
                         ))}
                     </div>
 
-                    <div className="p-8 border border-white/5 bg-[#050505] space-y-6">
+                    <div className="p-6 sm:p-8 border border-white/5 bg-[#050505] space-y-4 sm:space-y-6">
                         <h4 className="text-xs font-bold text-white uppercase flex items-center gap-2">
-                            <Activity size={16} className="text-emerald-500" /> System_Integrity_Checks
+                            <Activity size={14} className="sm:w-4 sm:h-4 text-emerald-500" /> System_Integrity_Checks
                         </h4>
-                        <div className="grid gap-8 md:grid-cols-3 text-[10px] font-mono text-slate-500 uppercase">
-                            <div className="space-y-2">
+                        <div className="grid gap-6 sm:gap-8 md:grid-cols-3 text-[9px] sm:text-[10px] font-mono text-slate-500 uppercase">
+                            <div className="space-y-1 sm:space-y-2">
                                 <span className="text-slate-300 block">Atomic Settlement</span>
                                 <p>Every credit change is logged in a double-entry ledger to prevent double-spending and ensure auditability.</p>
                             </div>
-                            <div className="space-y-2">
+                            <div className="space-y-1 sm:space-y-2">
                                 <span className="text-slate-300 block">Idempotent Execution</span>
                                 <p>Task IDs ensure that if a worker drops, the job is re-routed without duplicating compute effort.</p>
                             </div>
-                            <div className="space-y-2">
+                            <div className="space-y-1 sm:space-y-2">
                                 <span className="text-slate-300 block">Resource Capping</span>
                                 <p>Cgroups and Linux namespaces strictly limit CPU, Memory, and VRAM usage per task.</p>
                             </div>
@@ -180,12 +177,12 @@ const About = () => {
                 </section>
 
                 {/* FINAL CTA / FOOTER */}
-                <footer className="text-center py-12 border-t border-white/5">
-                    <p className="text-[10px] text-slate-600 uppercase tracking-[0.5em] mb-4">Ready to ship?</p>
-                    <div className="flex justify-center gap-4">
+                <footer className="text-center py-10 sm:py-12 border-t border-white/5">
+                    <p className="text-[9px] sm:text-[10px] text-slate-600 uppercase tracking-[0.5em] mb-3 sm:mb-4">Ready to ship?</p>
+                    <div className="flex justify-center gap-3 sm:gap-4">
                         <button 
                             onClick={() => navigate('/earlyAccess')}
-                            className="px-8 py-3 bg-emerald-500 text-black font-black uppercase text-xs hover:bg-emerald-400 transition-all italic"
+                            className="px-6 sm:px-8 py-2 sm:py-3 bg-emerald-500 text-black font-black uppercase text-xs hover:bg-emerald-400 transition-all italic"
                         >
                             Request_Console_Access
                         </button>
