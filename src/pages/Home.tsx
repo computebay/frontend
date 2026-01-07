@@ -249,116 +249,187 @@ const Home = () => {
             </section>
 
             {/* 5. EXECUTION FLOW */}
-            <section id="how-it-works" className="py-24 border-t border-white/5">
+            {/* 5. EXECUTION FLOW WITH SEQUENTIAL ANIMATION */}
+            <section id="how-it-works" className="py-24 border-t border-white/5 relative overflow-hidden">
                 <div className="mb-20">
                     <h2 className="font-mono text-[10px] font-bold uppercase tracking-[0.5em] text-slate-500 text-center mb-4">
-                        End-to-end flow
+                        System_Workflow
                     </h2>
                     <h3 className="text-5xl font-black text-white text-center uppercase tracking-tighter">
                         From job idea to settled credits
                     </h3>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-4">
+                {/* The Grid Container */}
+                <motion.div
+                    className="grid gap-6 md:grid-cols-4 relative"
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={{
+                        animate: {
+                            transition: {
+                                staggerChildren: 0.4, // This creates the 1, 2, 3, 4 sequence
+                            }
+                        }
+                    }}
+                >
                     {[
-                        { n: '01', t: 'Define the job', d: 'Developer creates a batch or simulation job, picks CPU/GPU shape, and funds it with platform credits.' },
-                        { n: '02', t: 'Schedule & route', d: 'Scheduler queues work, then routes tasks onto the best-value contributor nodes based on health and price.' },
-                        { n: '03', t: 'Run in sandbox', d: 'A lightweight agent spins up an isolated container, streams logs back to the control plane, and tears everything down.' },
-                        { n: '04', t: 'Settle credits', d: 'Actual CPU/GPU time is measured, credits are debited from the submitter, and contributors earn based on usage.' },
+                        { n: '01', t: 'Define the job', d: 'Developer creates a batch job, picks CPU/GPU shape, and funds it.' },
+                        { n: '02', t: 'Schedule & route', d: 'Scheduler queues work and routes to best-value contributor nodes.' },
+                        { n: '03', t: 'Run in sandbox', d: 'Lightweight agent spins up an isolated gVisor container.' },
+                        { n: '04', t: 'Settle credits', d: 'Actual compute time is measured and credits are settled instantly.' },
                     ].map((step, i) => (
-                        <div key={i} className="group relative border border-white/5 bg-[#050505] p-8 transition-all hover:bg-white/5">
+                        <motion.div
+                            key={i}
+                            variants={{
+                                initial: { opacity: 0, y: 20 },
+                                animate: {
+                                    opacity: 1,
+                                    y: 0,
+                                    transition: { duration: 0.5 }
+                                }
+                            }}
+                            className="group relative border border-white/5 bg-[#050505] p-8 transition-all duration-500 hover:bg-[#0A0A0A] hover:border-emerald-500/30"
+                        >
+                            {/* 1. THE "BLIP" EFFECT (Flashes green when the card "activates") */}
+                            <motion.div
+                                variants={{
+                                    animate: {
+                                        opacity: [0, 1, 0],
+                                        scale: [0.9, 1.05, 1],
+                                        transition: { delay: i * 0.4, duration: 0.8 }
+                                    }
+                                }}
+                                className="absolute inset-0 bg-emerald-500/10 pointer-events-none z-0"
+                            />
+
+                            {/* 2. THE BACKGROUND NUMBER */}
                             <span className="absolute top-6 left-8 font-mono text-5xl font-black text-white/[0.03] group-hover:text-emerald-500/10 transition-colors">
                                 {step.n}
                             </span>
-                            <div className="h-1 w-12 bg-emerald-500 mb-6" />
-                            <h4 className="mb-3 font-bold uppercase tracking-widest text-white text-sm">{step.t}</h4>
-                            <p className="text-xs leading-relaxed text-slate-500 group-hover:text-slate-400">{step.d}</p>
-                            <div className="mt-6 flex items-center gap-2 font-mono text-[9px] text-slate-600 uppercase">
-                                <span className="h-1 w-1 rounded-full bg-slate-700" /> Verification_Step
+
+                            {/* 3. THE PROGRESS BAR (Animates width when card blips) */}
+                            <motion.div
+                                initial={{ width: "0%" }}
+                                whileInView={{ width: "3rem" }}
+                                transition={{ delay: i * 0.4, duration: 0.5 }}
+                                className="h-1 bg-emerald-500 mb-6 group-hover:w-full transition-all duration-300"
+                            />
+
+                            <div className="relative z-10">
+                                <h4 className="mb-3 font-bold uppercase tracking-widest text-white text-sm">
+                                    {step.t}
+                                </h4>
+                                <p className="text-xs leading-relaxed text-slate-500 group-hover:text-slate-300">
+                                    {step.d}
+                                </p>
+
+                                {/* 4. STATUS INDICATOR */}
+                                <div className="mt-6 flex items-center gap-2 font-mono text-[9px] text-slate-600 uppercase">
+                                    <motion.span
+                                        animate={{
+                                            backgroundColor: ["#334155", "#10b981", "#334155"],
+                                        }}
+                                        transition={{
+                                            delay: i * 0.4,
+                                            duration: 1.5,
+                                            repeat: Infinity,
+                                            repeatDelay: 2
+                                        }}
+                                        className="h-1.5 w-1.5 rounded-full"
+                                    />
+                                    {`PROCESS_STAGE_${step.n}`}
+                                </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+
+                    {/* 5. THE CONNECTING "WIRE" (Optional: Visual line behind cards) */}
+                    <div className="absolute top-1/2 left-0 w-full h-px bg-white/[0.02] -z-10 hidden md:block" />
+                </motion.div>
             </section>
 
-            {/* 6. TEXTUAL OVERVIEW / ROLES */}
-            {/* 6. TEXTUAL OVERVIEW / ROLES */}
-            <section className="py-24 border-t border-white/5 w-full">
-                {/* This wrapper keeps the content centered and readable while the border above stays full-width */}
-                <div className="mx-auto max-w-7xl px-10">
-                    <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr] items-start">
 
-                        {/* Left Column: Overview */}
-                        <div className="space-y-8">
-                            <div className="space-y-4">
-                                <h2 className="font-mono text-[10px] font-bold uppercase tracking-[0.4em] text-slate-500 flex items-center gap-2">
-                                    <span className="h-[1px] w-8 bg-emerald-500/50" />
-                                    Overview
-                                </h2>
-                                <h3 className="text-4xl font-black text-white tracking-tight italic uppercase leading-none">
-                                    A marketplace <br /> for compute
-                                </h3>
-                                <p className="text-sm leading-relaxed text-slate-400 font-mono max-w-md">
-                                    Computebay connects developers who need batch power with contributors running idle hardware. Jobs are micro-orchestrated and settled in credits.
-                                </p>
+            {/* 6. TEXTUAL OVERVIEW / ROLES */}
+            <section className="py-24 border-t border-white/5">
+                <div className="grid gap-16 lg:grid-cols-[1fr_2fr]">
+                    {/* Sidebar: Platform Vision */}
+                    <div className="space-y-6">
+                        <h2 className="font-mono text-[10px] font-bold uppercase tracking-[0.4em] text-slate-500 flex items-center gap-2">
+                            <span className="h-[1px] w-8 bg-emerald-500/50" /> Overview
+                        </h2>
+                        <h3 className="text-4xl font-black text-white italic uppercase leading-none">A marketplace <br /> for compute</h3>
+                        <p className="text-sm leading-relaxed text-slate-400 font-mono">
+                            Computebay is a distributed marketplace connecting developers needing batch power with contributors running idle hardware. Built for scalability using microservices and secure sandboxing.
+                        </p>
+                    </div>
+
+                    {/* Main: Role Tracks */}
+                    <div className="grid gap-8 md:grid-cols-2">
+                        {/* Track: Job Submitter */}
+                        <div className="space-y-8 p-8 bg-[#080808] border border-white/5 hover:border-emerald-500/20 transition-all">
+                            <div className="flex items-center gap-4">
+                                <div className="h-12 w-12 flex items-center justify-center bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                                    <User size={24} />
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-black text-white uppercase italic tracking-tighter">Job Submitter</h4>
+                                    <p className="text-[10px] text-emerald-500 font-mono uppercase tracking-[0.2em]">Demand_Side</p>
+                                </div>
                             </div>
-
-                            <div className="grid gap-6 sm:grid-cols-3">
-                                {[
-                                    { t: 'Reliability', d: 'Health checks and resumable workloads.' },
-                                    { t: 'Security', d: 'Hardened isolated containers.' },
-                                    { t: 'Payments', d: 'Unified credit ledger system.' }
-                                ].map((feat, i) => (
-                                    <div key={i} className="group">
-                                        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-emerald-500 font-bold underline decoration-white/10 underline-offset-8 transition-all group-hover:decoration-emerald-500/50">
-                                            {feat.t}
-                                        </div>
-                                        <p className="mt-3 text-slate-500 font-mono text-[10px] leading-tight group-hover:text-slate-400">
-                                            {feat.d}
-                                        </p>
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest">
+                                        <span className="text-emerald-500">01</span> Onboarding
                                     </div>
-                                ))}
+                                    <p className="text-[11px] text-slate-500 font-mono">Register via OAuth2/JWT and set up secure WorkOS authentication.</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest">
+                                        <span className="text-emerald-500">02</span> Credit Deposit
+                                    </div>
+                                    <p className="text-[11px] text-slate-500 font-mono">Deposit credits via Stripe. Transaction logging ensures balance integrity.</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest">
+                                        <span className="text-emerald-500">03</span> Submission
+                                    </div>
+                                    <p className="text-[11px] text-slate-500 font-mono">Upload containers or S3 references. Monitor live logs and final debits.</p>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Right Column: Roles */}
-                        <div className="relative space-y-10 border-l border-white/5 pl-12">
-                            {/* Job Submitter Role */}
-                            <div className="space-y-5">
-                                <div className="flex items-center gap-4">
-                                    <div className="h-10 w-10 flex items-center justify-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                                        <User size={20} />
-                                    </div>
-                                    <div>
-                                        <h4 className="text-md font-black text-white uppercase italic tracking-tighter">Job submitter</h4>
-                                        <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-0.5">Demand Side</p>
-                                    </div>
+                        {/* Track: Compute Contributor */}
+                        <div className="space-y-8 p-8 bg-[#080808] border border-white/5 hover:border-sky-500/20 transition-all">
+                            <div className="flex items-center gap-4">
+                                <div className="h-12 w-12 flex items-center justify-center bg-sky-500/10 text-sky-400 border border-sky-500/20 shadow-[0_0_15px_rgba(14,165,233,0.1)]">
+                                    <WalletCards size={24} />
                                 </div>
-                                <ul className="space-y-3 text-[11px] text-slate-400 font-mono uppercase tracking-tight">
-                                    <li className="flex items-center gap-2 text-slate-500"><span className="text-emerald-500">→</span> Create resource specs & SLAs</li>
-                                    <li className="flex items-center gap-2 text-slate-500"><span className="text-emerald-500">→</span> Real-time log streaming</li>
-                                    <li className="flex items-center gap-2 text-slate-500"><span className="text-emerald-500">→</span> Detailed usage reporting</li>
-                                </ul>
+                                <div>
+                                    <h4 className="text-lg font-black text-white uppercase italic tracking-tighter">Compute Contributor</h4>
+                                    <p className="text-[10px] text-sky-400 font-mono uppercase tracking-[0.2em]">Supply_Side</p>
+                                </div>
                             </div>
-
-                            <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent" />
-
-                            {/* Contributor Role */}
-                            <div className="space-y-5">
-                                <div className="flex items-center gap-4">
-                                    <div className="h-10 w-10 flex items-center justify-center bg-sky-500/10 text-sky-400 border border-sky-500/20">
-                                        <WalletCards size={20} />
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest">
+                                        <span className="text-sky-400">01</span> Registration
                                     </div>
-                                    <div>
-                                        <h4 className="text-md font-black text-white uppercase italic tracking-tighter">Compute contributor</h4>
-                                        <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-0.5">Supply Side</p>
-                                    </div>
+                                    <p className="text-[11px] text-slate-500 font-mono">Install the Worker Agent to benchmark CPU/GPU and join the Resource Service.</p>
                                 </div>
-                                <ul className="space-y-3 text-[11px] text-slate-400 font-mono uppercase tracking-tight">
-                                    <li className="flex items-center gap-2 text-slate-500"><span className="text-sky-500">→</span> Secure one-click registry</li>
-                                    <li className="flex items-center gap-2 text-slate-500"><span className="text-sky-500">→</span> Uptime & health heartbeat</li>
-                                    <li className="flex items-center gap-2 text-slate-500"><span className="text-sky-500">→</span> Instant credit withdrawal</li>
-                                </ul>
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest">
+                                        <span className="text-sky-400">02</span> Discovery
+                                    </div>
+                                    <p className="text-[11px] text-slate-500 font-mono">Maintain active heartbeats to central registry (Consul/etcd) for task polling.</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest">
+                                        <span className="text-sky-400">03</span> Payout
+                                    </div>
+                                    <p className="text-[11px] text-slate-500 font-mono">Earn for actual compute used. Withdraw via crypto or fiat payout links.</p>
+                                </div>
                             </div>
                         </div>
                     </div>

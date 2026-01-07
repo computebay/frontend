@@ -70,7 +70,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                   duration: 2,        // Smoothness of the transition
                   size: maxSize ? maxSize * 1.5 : 4, // Grow slightly
                   opacity: 1,         // Full brightness
-                  color: { value: "#3ae9a9ff" } // A slightly brighter emerald for the glow
+                  color: { value: "#34d399" } // A slightly brighter emerald for the glow
                 },
               },
             },
