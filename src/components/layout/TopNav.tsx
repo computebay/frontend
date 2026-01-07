@@ -26,15 +26,7 @@ const TopNav = () => {
 
         {/* Navigation - Monospaced & Sharp */}
         <nav className="hidden items-center gap-8 font-mono text-[11px] uppercase tracking-widest text-slate-400 md:flex">
-          {['how-it-works', 'use-cases', 'for-developers'].map((item) => (
-            <a 
-              key={item}
-              href={`#${item}`} 
-              className="transition-colors hover:text-emerald-400"
-            >
-              {item.replace('-', ' ')}
-            </a>
-          ))}
+          
           
           {/* Integrated Themed Glass Button */}
           <ThemedGlassButton 
