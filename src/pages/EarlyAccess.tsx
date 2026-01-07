@@ -1,7 +1,7 @@
 "use client";
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Mail, Rocket } from 'lucide-react';
+import { ArrowLeft, Mail, Rocket, ShieldCheck, Terminal } from 'lucide-react'; // Added icons
 import { SparklesCore } from '../components/ui/sparkles';
 
 const EarlyAccess = () => {
@@ -10,40 +10,71 @@ const EarlyAccess = () => {
   const [role, setRole] = useState<'developer' | 'contributor' | 'both'>('developer');
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false); // New state for success UI
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setMessage(null);
     setError(null);
 
     if (!email) {
-      setError('Please enter an email address.');
+      setError('IDENT_REQUIRED: Enter email address.');
       return;
     }
 
     setLoading(true);
+
+    // 1. Construct the Cyberpunk HTML Email Template
+    const emailHtml = `
+      <div style="background-color: #050505; color: #cbd5e1; font-family: 'Courier New', Courier, monospace; padding: 40px; border: 1px solid #10b981;">
+        <h2 style="color: #10b981; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #10b981; padding-bottom: 10px;">
+          COMPUTEBAY // WAITLIST_CONFIRMED
+        </h2>
+        <p style="margin-top: 20px;">Transmission received. Node <b>${email}</b> has been successfully indexed.</p>
+        
+        <div style="background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981; padding: 15px; margin: 20px 0;">
+          <p style="margin: 0; font-size: 12px; color: #10b981; font-weight: bold;">[ACCESS_DETAILS]</p>
+          <p style="margin: 5px 0 0 0;">ROLE: ${role.toUpperCase()}</p>
+          <p style="margin: 5px 0 0 0;">STATUS: QUEUED_FOR_PROVISIONING</p>
+        </div>
+
+        <p>Our team is currently reviewing payloads. You will receive a secondary uplink once your console slot is ready for deployment.</p>
+        
+        <p style="margin-top: 30px; font-size: 10px; color: #475569;">
+          ID: ${Math.random().toString(36).substring(7).toUpperCase()}<br>
+          ENCRYPTION: ACTIVE<br>
+          SYSTEM: COMPUTEBAY_CORE_V4
+        </p>
+      </div>
+    `;
+
     try {
-      // Backend stub
-      const res = await fetch('/api/v1/early-access', {
+      // 2. Send the exact body your backend expects
+      const res = await fetch('/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, role, notes }),
+        body: JSON.stringify({
+          to: email,
+          subject: "Computebay Waitlist Authorization",
+          html: emailHtml
+        }),
       });
 
-      if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
-      setMessage('Thanks – you’re on the early access list.');
+      if (!res.ok) throw new Error(`TERMINAL_ERR: Status ${res.status}`);
+
+      setSubmitted(true);
+      setEmail(''); // Reset form on success
+      setNotes('');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not submit request.');
+      setError(err instanceof Error ? err.message : 'UPLINK_FAILURE: Request dropped.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="relative min-h-screen">
-      {/* 1. BACKGROUND LAYER - Moved to top and added pointer-events-none */}
+    <div className="relative min-h-screen selection:bg-emerald-500/30">
+      {/* BACKGROUND LAYER */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <SparklesCore
           id="tsparticlesearly"
@@ -55,117 +86,132 @@ const EarlyAccess = () => {
           particleColor="#10b981"
           speed={0.5}
         />
-        {/* Adjusted the mask - transparent center should be larger to see the form */}
         <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       </div>
 
-      {/* 2. CONTENT LAYER */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
+      {/* CONTENT LAYER */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:py-20">
         <button
           type="button"
           onClick={() => navigate('/')}
-          className="mb-8 sm:mb-10 inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-slate-500 hover:text-emerald-400 transition-colors"
+          className="mb-8 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 hover:text-emerald-400 transition-colors"
         >
-          <ArrowLeft size={12} className="sm:w-4 sm:h-4" />
+          <ArrowLeft size={14} />
           Back to overview
         </button>
 
-        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[1.1fr_1fr] items-start">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] items-start">
           {/* Copy column */}
-          <div className="space-y-4 sm:space-y-6">
-            <div className="inline-flex items-center gap-2 sm:gap-3 border border-emerald-500/40 bg-emerald-500/10 px-2 sm:px-3 py-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-emerald-300">
-              <Rocket size={12} className="sm:w-4 sm:h-4" />
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-3 border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.25em] text-emerald-300">
+              <Rocket size={14} />
               Early console access
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white sm:text-5xl">
+            <h1 className="text-4xl lg:text-5xl font-black uppercase tracking-tight text-white">
               Be first to ship on the <span className="text-emerald-400">Computebay grid</span>.
             </h1>
 
             <p className="max-w-xl text-sm leading-relaxed text-slate-400">
-              We&apos;re opening the developer console and contributor portal in
-              stages. Share how you plan to use Computebay.
+              Our transmission is live. Once registered, check your inbox for the
+              initialization sequence and waitlist confirmation.
             </p>
-
-            <div className="grid gap-3 sm:gap-4 text-xs text-slate-300 sm:grid-cols-2">
-              <div className="space-y-1">
-                <div className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">For job submitters</div>
-                <p>Batch and simulation teams who want predictable pricing.</p>
-              </div>
-              <div className="space-y-1">
-                <div className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">For contributors</div>
-                <p>GPU and CPU owners who want to onboard hardware early.</p>
-              </div>
-            </div>
           </div>
 
-          {/* Form column */}
-          <div className="border border-white/10 bg-[#050505]/80 backdrop-blur-md p-6 sm:p-8 shadow-2xl">
-            <div className="mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
-              <div className="flex h-8 sm:h-9 w-8 sm:w-9 items-center justify-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/40">
-                <Mail size={16} className="sm:w-5 sm:h-5" />
-              </div>
-              <div>
-                <div className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">Request invite</div>
-                <div className="text-sm font-semibold text-white">Join the early registration list</div>
-              </div>
-            </div>
+          {/* Form / Success column */}
+          <div className="border border-white/10 bg-[#050505]/80 backdrop-blur-md p-8 shadow-2xl relative overflow-hidden">
+            {/* Ambient scanline effect */}
+            <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] z-20 bg-[length:100%_2px,3px_100%]"></div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-1.5">
-                <label htmlFor="email" className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">Work email</label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  placeholder="you@company.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border border-slate-700 bg-black/60 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-emerald-400"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">I am primarily a…</span>
-                <div className="grid grid-cols-3 gap-1 sm:gap-2 text-[10px] sm:text-[11px]">
-                  {(['developer', 'contributor', 'both'] as const).map((opt) => (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => setRole(opt)}
-                      className={`border px-1 sm:px-2 py-1 font-mono uppercase tracking-[0.15em] transition-colors ${
-                        role === opt ? 'border-emerald-400 bg-emerald-500/10 text-emerald-300' : 'border-slate-700 bg-black/40 text-slate-400 hover:border-slate-500'
-                      }`}
-                    >
-                      {opt === 'developer' ? 'Submitter' : opt}
-                    </button>
-                  ))}
+            {!submitted ? (
+              <>
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/40">
+                    <Terminal size={20} />
+                  </div>
+                  <div>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">System initialization</div>
+                    <div className="text-sm font-semibold text-white">Enter access credentials</div>
+                  </div>
                 </div>
+
+                <form onSubmit={handleSubmit} className="space-y-5 relative z-30">
+                  <div className="space-y-1.5">
+                    <label className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">Work email</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="you@company.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full border border-slate-700 bg-black/60 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/20"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">Primary Role</span>
+                    <div className="grid grid-cols-3 gap-2 text-[11px]">
+                      {(['developer', 'contributor', 'both'] as const).map((opt) => (
+                        <button
+                          key={opt}
+                          type="button"
+                          onClick={() => setRole(opt)}
+                          className={`border px-2 py-1.5 font-mono uppercase tracking-[0.15em] transition-all ${role === opt
+                              ? 'border-emerald-400 bg-emerald-500/10 text-emerald-300'
+                              : 'border-slate-800 bg-black/40 text-slate-500 hover:border-slate-600'
+                            }`}
+                        >
+                          {opt === 'developer' ? 'Submitter' : opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-500">Payload Description</label>
+                    <textarea
+                      rows={3}
+                      placeholder="What tasks will you compute?"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      className="w-full resize-none border border-slate-700 bg-black/60 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-emerald-400"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="group relative mt-2 inline-flex w-full items-center justify-center border border-emerald-400 bg-emerald-500 px-4 py-3 text-xs font-black uppercase tracking-[0.25em] text-black transition hover:bg-emerald-400 disabled:opacity-50"
+                  >
+                    {loading ? 'Transmitting...' : 'Request Authorization'}
+                  </button>
+
+                  {error && (
+                    <div className="mt-4 border border-rose-500/60 bg-rose-500/10 px-3 py-2 text-[10px] font-mono text-rose-300 animate-pulse">
+                      &gt; ERROR: {error}
+                    </div>
+                  )}
+                </form>
+              </>
+            ) : (
+              /* SUCCESS STATE UI */
+              <div className="flex flex-col items-center justify-center py-10 text-center space-y-4 animate-in fade-in zoom-in duration-500">
+                <div className="h-16 w-16 bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 mb-2">
+                  <ShieldCheck size={40} />
+                </div>
+                <h2 className="text-xl font-mono uppercase tracking-widest text-emerald-400">Access Authenticated</h2>
+                <p className="text-slate-400 text-xs leading-relaxed max-w-xs font-mono">
+                  Your request has been logged to the waitlist. <br /><br />
+                  A confirmation packet has been sent to <span className="text-white underline">{email}</span>.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="text-[10px] font-mono uppercase tracking-widest text-slate-500 hover:text-white underline transition-colors"
+                >
+                  Return to portal
+                </button>
               </div>
-
-              <div className="space-y-1.5">
-                <label htmlFor="notes" className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-500">What do you plan to run?</label>
-                <textarea
-                  id="notes"
-                  rows={3}
-                  placeholder="e.g. nightly risk simulations..."
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="w-full resize-none border border-slate-700 bg-black/60 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-emerald-400"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="mt-2 inline-flex w-full items-center justify-center border border-emerald-400 bg-emerald-500 px-4 py-2 text-xs font-black uppercase tracking-[0.25em] text-black transition hover:bg-emerald-400 disabled:opacity-60"
-              >
-                {loading ? 'Submitting…' : 'Request early access'}
-              </button>
-
-              {message && <div className="mt-2 border border-emerald-500/60 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-200">{message}</div>}
-              {error && <div className="mt-2 border border-rose-500/60 bg-rose-500/10 px-3 py-2 text-xs text-rose-200">{error}</div>}
-            </form>
+            )}
           </div>
         </div>
       </div>
