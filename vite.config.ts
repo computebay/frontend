@@ -8,7 +8,10 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "./src/"),
     },
   },
+  server:{
+    allowedHosts:["7f5f5d6f9914.ngrok-free.app"]
+  }
 })
