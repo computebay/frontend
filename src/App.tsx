@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import EarlyAccess from './pages/EarlyAccess';
 import TopNav from './components/layout/TopNav';
 import SmoothScroll from './components/layout/SmoothScroll';
+import About from './pages/About';
 const App = () => {
   return (
     <SmoothScroll>
@@ -22,6 +23,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/earlyAccess" element={<EarlyAccess />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
 
