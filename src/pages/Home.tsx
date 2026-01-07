@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import ShinyButton from '../components/ShinyButton';
 import { useNavigate } from 'react-router-dom';
-import { SparklesCore } from '../components/SparklesCore'; 
+import { SparklesCore } from '../components/SparklesCore';
 
 // --- Local WorkloadCard Component ---
 interface WorkloadCardProps {
@@ -92,7 +92,20 @@ const Home = () => {
                     75% { top: calc(100% - 4px); left: 0%; }
                 }
             `}</style>
-
+            <div className="fixed inset-0 z-0 w-full h-full">
+                <SparklesCore
+                    id="tsparticleshome"
+                    background="transparent"
+                    minSize={0.6}
+                    maxSize={1.4}
+                    particleDensity={150}
+                    className="w-full h-full"
+                    particleColor="#10b981" // Emerald Green
+                    speed={0.5}
+                />
+                {/* Radial Mask to prevent overwhelming the UI and keep text readable */}
+                <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_50%,black)]"></div>
+            </div>
 
 
             {/* 1. HERO SECTION */}
