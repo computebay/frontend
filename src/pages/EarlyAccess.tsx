@@ -63,7 +63,7 @@ const EarlyAccess = () => {
       if (!res.ok) throw new Error(`TERMINAL_ERR: Status ${res.status}`);
 
       setSubmitted(true);
-      setEmail(''); // Reset form on success
+      // setEmail(''); // Reset form on success
       setNotes('');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'UPLINK_FAILURE: Request dropped.');
@@ -205,7 +205,7 @@ const EarlyAccess = () => {
                   A confirmation packet has been sent to <span className="text-white underline">{email}</span>.
                 </p>
                 <button
-                  onClick={() => setSubmitted(false)}
+                   onClick={() => navigate('/')}
                   className="text-[10px] font-mono uppercase tracking-widest text-slate-500 hover:text-white underline transition-colors"
                 >
                   Return to portal
