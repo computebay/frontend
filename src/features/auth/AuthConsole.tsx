@@ -9,7 +9,7 @@ interface AuthResponse {
   user?: unknown
 }
 
-const API_BASE = 'http://localhost:3000/api/v1/auth'
+const API_BASE =import.meta.env.BASE_URL
 
 const AuthConsole = () => {
   const [mode, setMode] = useState<AuthMode>('login')

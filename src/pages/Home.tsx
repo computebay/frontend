@@ -121,7 +121,7 @@ const Home = () => {
                                 <span className="absolute h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
                             </span>
-                            Grid_Status: Optimal // 62.4 TFLOPS Available
+                            Grid_Status: Optimal
                         </div>
 
                         <h1 className="text-7xl font-black leading-[0.85] tracking-tighter text-white sm:text-9xl uppercase">
