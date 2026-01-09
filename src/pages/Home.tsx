@@ -182,10 +182,10 @@ const Home = () => {
             </section>
 
             {/* 3. USE CASES SECTION (INTEGRATED WITH WORKLOADCARD) */}
-            <section id="use-cases" className="mb-20 sm:mb-24">
-                <div className="mb-8 sm:mb-10 flex flex-col gap-2 sm:gap-3 md:flex-row md:items-end md:justify-between">
+            <section id="use-cases" className="mb-20 sm:mb-24 ">
+                <div className="mb-8 sm:mb-10 flex flex-col gap-2 sm:gap-3 md:flex-row md:items-end md:justify-between z-10">
                     <div>
-                        <h2 className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.4em] text-slate-500 border-l-2 border-emerald-500 pl-3 sm:pl-4">Workloads we like</h2>
+                        <h2 className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.4em] text-slate-500 border-l-2 border-emerald-500 pl-3 sm:pl-4 z-10">Workloads we like</h2>
                         <p className="mt-1 sm:mt-2 text-sm sm:text-m text-slate-400 max-w-xl font-mono">
                             Computebay is tuned for long-running, embarrassingly parallel jobs where throughput matters more than single-request latency.
                         </p>
@@ -218,8 +218,8 @@ const Home = () => {
             </section>
 
             {/* 4. DUAL AUDIENCE SECTION */}
-            <section id="for-developers" className="grid gap-8 sm:gap-1 md:grid-cols-2 mb-20 sm:mb-24">
-                <div className="group border border-white/10 bg-[#080808] p-8 sm:p-12 transition-all hover:bg-[#0A0A0A] hover:border-emerald-500/50">
+            <section id="for-developers" className="grid gap-8 sm:gap-1 md:grid-cols-2 mb-20 sm:mb-24 z-20">
+                <div className="group border border-white/10 bg-[#080808] p-8 sm:p-12 transition-all hover:bg-[#0A0A0A] hover:border-emerald-500/50 z-10">
                     <div className="mb-6 sm:mb-8 flex h-12 sm:h-14 w-12 sm:w-14 items-center justify-center bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
                         <Terminal size={24} className="sm:w-7 sm:h-7" />
                     </div>
@@ -233,7 +233,7 @@ const Home = () => {
                     </ul>
                 </div>
 
-                <div className="group border border-white/10 bg-[#080808] p-8 sm:p-12 transition-all hover:bg-[#0A0A0A] hover:border-sky-500/50">
+                <div className="group border border-white/10 bg-[#080808] p-8 sm:p-12 transition-all hover:bg-[#0A0A0A] hover:border-sky-500/50 z-10">
                     <div className="mb-6 sm:mb-8 flex h-12 sm:h-14 w-12 sm:w-14 items-center justify-center bg-sky-500/10 text-sky-400 border border-sky-500/20">
                         <Globe size={24} className="sm:w-7 sm:h-7" />
                     </div>
@@ -355,7 +355,7 @@ const Home = () => {
             <section className="py-20 sm:py-24 border-t border-white/5">
                 <div className="grid gap-12 sm:gap-16 lg:grid-cols-[1fr_2fr]">
                     {/* Sidebar: Platform Vision */}
-                    <div className="space-y-4 sm:space-y-6">
+                    <div className="space-y-4 sm:space-y-6 z-10">
                         <h2 className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.4em] text-slate-500 flex items-center gap-2">
                             <span className="h-[1px] w-6 sm:w-8 bg-emerald-500/50" /> Overview
                         </h2>
@@ -366,7 +366,7 @@ const Home = () => {
                     </div>
 
                     {/* Main: Role Tracks */}
-                    <div className="grid gap-6 sm:gap-8 grid-cols-1 lg:grid-cols-2">
+                    <div className="grid gap-6 sm:gap-8 grid-cols-1 lg:grid-cols-2 z-10">
                         {/* Track: Job Submitter */}
                         <div className="space-y-6 sm:space-y-8 p-6 sm:p-8 bg-[#080808] border border-white/5 hover:border-emerald-500/20 transition-all">
                             <div className="flex items-center gap-3 sm:gap-4">
