@@ -116,13 +116,14 @@ const Home = () => {
                         animate={{ opacity: 1, x: 0 }}
                         className="space-y-8 sm:space-y-10"
                     >
-                        <div className="inline-flex items-center gap-2 sm:gap-3 border border-emerald-500/30 bg-emerald-500/5 px-2 sm:px-3 py-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-emerald-400">
+                        <div className="inline-flex items-center gap-2 sm:gap-3 border border-amber-500/30 bg-amber-500/5 px-2 sm:px-3 py-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-amber-400">
                             <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
-                                <span className="absolute h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                                <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-emerald-500" />
+                                <span className="absolute h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+                                <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-amber-500" />
                             </span>
-                            Grid_Status: Optimal
+                            Grid_Status: In_Progress
                         </div>
+
 
                         <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black leading-[0.85] tracking-tighter text-white sm:text-9xl uppercase">
                             The <span className="text-emerald-500">Compute</span> <br /> Marketplace.
