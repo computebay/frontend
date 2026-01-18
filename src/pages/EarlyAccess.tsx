@@ -24,29 +24,7 @@ const EarlyAccess = () => {
 
     setLoading(true);
 
-    // 1. Construct the Cyberpunk HTML Email Template
-    const emailHtml = `
-      <div style="background-color: #050505; color: #cbd5e1; font-family: 'Courier New', Courier, monospace; padding: 40px; border: 1px solid #10b981;">
-        <h2 style="color: #10b981; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #10b981; padding-bottom: 10px;">
-          COMPUTEBAY // WAITLIST_CONFIRMED
-        </h2>
-        <p style="margin-top: 20px;">Transmission received. Node <b>${email}</b> has been successfully indexed.</p>
-        
-        <div style="background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981; padding: 15px; margin: 20px 0;">
-          <p style="margin: 0; font-size: 12px; color: #10b981; font-weight: bold;">[ACCESS_DETAILS]</p>
-          <p style="margin: 5px 0 0 0;">ROLE: ${role.toUpperCase()}</p>
-          <p style="margin: 5px 0 0 0;">STATUS: QUEUED_FOR_PROVISIONING</p>
-        </div>
-
-        <p>Our team is currently reviewing payloads. You will receive a secondary uplink once your console slot is ready for deployment.</p>
-        
-        <p style="margin-top: 30px; font-size: 10px; color: #475569;">
-          ID: ${Math.random().toString(36).substring(7).toUpperCase()}<br>
-          ENCRYPTION: ACTIVE<br>
-          SYSTEM: COMPUTEBAY_CORE_V4
-        </p>
-      </div>
-    `;
+    
 
     try {
       // 2. Send the exact body your backend expects
@@ -55,8 +33,8 @@ const EarlyAccess = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           to: email,
-          subject: "Computebay Waitlist Authorization",
-          html: emailHtml
+          type: "waitlist_confirmed",
+          role: role.toUpperCase()
         }),
       });
 
@@ -157,8 +135,8 @@ const EarlyAccess = () => {
                           type="button"
                           onClick={() => setRole(opt)}
                           className={`border px-2 py-1.5 font-mono uppercase tracking-[0.15em] transition-all ${role === opt
-                              ? 'border-emerald-400 bg-emerald-500/10 text-emerald-300'
-                              : 'border-slate-800 bg-black/40 text-slate-500 hover:border-slate-600'
+                            ? 'border-emerald-400 bg-emerald-500/10 text-emerald-300'
+                            : 'border-slate-800 bg-black/40 text-slate-500 hover:border-slate-600'
                             }`}
                         >
                           {opt === 'developer' ? 'Submitter' : opt}
@@ -205,7 +183,7 @@ const EarlyAccess = () => {
                   A confirmation packet has been sent to <span className="text-white underline">{email}</span>.
                 </p>
                 <button
-                   onClick={() => navigate('/')}
+                  onClick={() => navigate('/')}
                   className="text-[10px] font-mono uppercase tracking-widest text-slate-500 hover:text-white underline transition-colors"
                 >
                   Return to portal
