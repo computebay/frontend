@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Home from './pages/Home';
 import EarlyAccess from './pages/EarlyAccess';
 import TopNav from './components/layout/TopNav';
@@ -45,6 +46,7 @@ const App = () => {
             </div>
           </div>
         </footer>
+        <Analytics />
       </div>
     </SmoothScroll>
   );
