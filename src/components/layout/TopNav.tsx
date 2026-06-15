@@ -9,7 +9,7 @@ const TopNav = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-8xl items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
+      <div className="mx-auto flex w-full items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16 py-4">
         
         {/* Logo Section - Redirects to '/' */}
         <a 

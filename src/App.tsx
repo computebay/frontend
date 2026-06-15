@@ -20,7 +20,7 @@ const App = () => {
 
         <TopNav />
 
-        <main className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
+        <main className="relative z-10 mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/earlyAccess" element={<EarlyAccess />} />
