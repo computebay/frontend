@@ -18,6 +18,7 @@ import ShinyButton from '../components/ShinyButton';
 import { useNavigate } from 'react-router-dom';
 import { SparklesCore } from '../components/SparklesCore';
 import { WaitlistForm } from '../components/WaitlistForm';
+import TerminalDemo from '../components/terminal-demo';
 
 // --- Local WorkloadCard Component ---
 interface WorkloadCardProps {
@@ -145,38 +146,9 @@ const Home = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.98 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="relative border border-white/10 bg-[#050505] p-1 shadow-[0_0_50px_-12px_rgba(16,185,129,0.2)]"
+                        className="relative w-full flex justify-center lg:justify-end"
                     >
-                        <div className="flex items-center justify-between border-b border-white/5 bg-[#111] px-3 sm:px-4 py-2 sm:py-3">
-                            <div className="flex gap-1.5 sm:gap-2">
-                                <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 bg-red-500/20 border border-red-500/40" />
-                                <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 bg-amber-500/20 border border-amber-500/40" />
-                                <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 bg-emerald-500/20 border border-emerald-500/40" />
-                            </div>
-                            <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-slate-500">Active_Jobs_v4.0.1</span>
-                        </div>
-                        <div className="p-3 sm:p-5 space-y-3 sm:space-y-4 font-mono text-[10px] sm:text-[11px]">
-                            <div className="flex items-center justify-between border border-emerald-500/20 bg-emerald-500/5 p-3 sm:p-4 group hover:bg-emerald-500/10 transition-colors">
-                                <span className="text-emerald-400 flex items-center gap-1 sm:gap-2">
-                                    <Activity size={12} className="sm:w-4 sm:h-4" /> job_7f23: scarpe_order_lists
-                                </span>
-                                <span className="text-emerald-500 font-bold">ACTIVE [128 vCPUs]</span>
-                            </div>
-                            <div className="flex items-center justify-between border border-sky-500/20 bg-sky-500/5 p-3 sm:p-4 group hover:bg-sky-500/10 transition-colors">
-                                <span className="text-sky-400 flex items-center gap-1 sm:gap-2">
-                                    <Server size={12} className="sm:w-4 sm:h-4" /> job_8aa1: Flux_Image_Batch
-                                </span>
-                                <span className="text-sky-300 font-bold">QUEUED [RTX 4090 x 64]</span>
-                            </div>
-                            <div className="space-y-1 p-2 sm:p-3 text-slate-500 text-[9px] sm:text-[10px] bg-black/40 border border-white/5">
-                                <div className="flex justify-between"><span>{`> BOOTING_SANDBOX...`}</span><span className="text-emerald-500">READY</span></div>
-                                <div className="flex justify-between"><span>{`> VRAM_ALLOC_24GB...`}</span><span className="text-emerald-500">SUCCESS</span></div>
-                                <div className="flex items-center gap-1 mt-2 text-emerald-400">
-                                    {`> MONITORING_STREAM`}
-                                    <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="h-3 w-0.5 sm:h-3.5 sm:w-2 bg-emerald-500" />
-                                </div>
-                            </div>
-                        </div>
+                        <TerminalDemo />
                     </motion.div>
                 </div>
             </section>
