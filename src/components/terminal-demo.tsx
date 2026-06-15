@@ -6,31 +6,29 @@ export default function TerminalDemo() {
     <section className="w-full">
       <Terminal
         commands={[
-          "computebay init",
+          
           "computebay run --url github.com/computebay/demo --cpu 2 --memory 2048",
-          "computebay logs --follow",
+          "computebay logs --f",
         ]}
         outputs={{
+          
           0: [
-            "✔ Authenticated as developer.",
-            "✔ Initialized workspace.",
-          ],
-          1: [
-            "Analyzing repository...",
-            "✔ Detected Dockerfile.",
-            "Allocating resources from global grid...",
+            "Cloning repository...",
+            "✔ Downloading packages...",
+            "✔ Installing dependencies...",
+            "✔ Building Docker image...",
             "✔ Secured 2 vCPU and 2048MB RAM (Community Nodes).",
             "✔ Booting sandboxed containers...",
             "✔ Job started successfully. ID: job_9bb2",
           ],
-          2: [
+          1: [
             "Streaming logs for job_9bb2...",
             "> Build complete.",
             "> Starting service...",
             "Service is running! Access at: https://job-9bb2.computebay.online",
           ],
         }}
-        typingSpeed={45}
+        typingSpeed={50}
         delayBetweenCommands={1000}
       />
     </section>

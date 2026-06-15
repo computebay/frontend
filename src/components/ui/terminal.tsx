@@ -291,7 +291,7 @@ export function Terminal({
   outputs = {},
   username = "berzz",
   className,
-  typingSpeed = 50,
+  typingSpeed = 55,
   delayBetweenCommands = 800,
   initialDelay = 500,
   enableSound = true,
@@ -327,27 +327,36 @@ export function Terminal({
   useEffect(() => {
     if (phase !== "typing") return;
 
-    if (charIdx < currentCommand.length) {
-      const char = currentCommand[charIdx];
-      down(char);
-      const t = setTimeout(
-        () => {
-          up(char);
-          setCurrentText(currentCommand.slice(0, charIdx + 1));
-          setCharIdx((c) => c + 1);
-        },
-        typingSpeed + Math.random() * 30,
-      );
-      return () => clearTimeout(t);
-    } else {
-      down("Enter");
-      const t = setTimeout(() => {
-        up("Enter");
-        setPhase("executing");
-      }, 80);
-      return () => clearTimeout(t);
-    }
-  }, [phase, charIdx, currentCommand, typingSpeed, down, up]);
+    let charIndex = charIdx;
+    let timerId: ReturnType<typeof setTimeout> | null = null;
+
+    const typeNextChar = () => {
+      if (charIndex < currentCommand.length) {
+        const char = currentCommand[charIndex];
+        down(char);
+        
+        setCurrentText(currentCommand.slice(0, charIndex + 1));
+        charIndex++;
+        setCharIdx(charIndex);
+        
+        setTimeout(() => up(char), 30);
+
+        timerId = setTimeout(typeNextChar, typingSpeed);
+      } else {
+        down("Enter");
+        timerId = setTimeout(() => {
+          up("Enter");
+          setPhase("executing");
+        }, 80);
+      }
+    };
+
+    timerId = setTimeout(typeNextChar, typingSpeed);
+
+    return () => {
+      if (timerId) clearTimeout(timerId);
+    };
+  }, [phase, currentCommand, typingSpeed, down, up]);
 
   useEffect(() => {
     if (phase !== "executing") return;
@@ -407,7 +416,10 @@ export function Terminal({
 
   useEffect(() => {
     if (contentRef.current) {
-      contentRef.current.scrollTop = contentRef.current.scrollHeight;
+      contentRef.current.scrollTo({
+        top: contentRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [lines, phase]);
 
@@ -424,20 +436,20 @@ export function Terminal({
     <div
       ref={containerRef}
       className={cn(
-        "mx-auto w-full max-w-xl px-4 font-mono text-xs",
+        "mx-auto w-full max-w-3xl px-4 font-mono text-xs sm:text-sm",
         className,
       )}
     >
       <div className="overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 shadow-2xl">
         {/* Title Bar */}
         <div className="flex items-center gap-2 bg-neutral-800 px-4 py-3">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <div className="h-3 w-3 rounded-full bg-red-500 transition-colors hover:bg-red-600" />
             <div className="h-3 w-3 rounded-full bg-yellow-500 transition-colors hover:bg-yellow-600" />
             <div className="h-3 w-3 rounded-full bg-green-500 transition-colors hover:bg-green-600" />
           </div>
           <div className="flex-1 text-center">
-            <span className="truncate text-xs text-neutral-400">
+            <span className="truncate text-sm text-neutral-400">
               {username} — bash
             </span>
           </div>
@@ -447,10 +459,10 @@ export function Terminal({
         {/* Terminal Content */}
         <div
           ref={contentRef}
-          className="no-visible-scrollbar h-80 overflow-y-auto p-4 font-mono"
+          className="terminal-scrollbar h-[400px] overflow-y-auto p-6 font-mono"
         >
           {lines.map((line, i) => (
-            <div key={i} className="leading-relaxed whitespace-pre-wrap">
+            <div key={i} className="leading-relaxed whitespace-pre-wrap mb-1 animate-in fade-in slide-in-from-bottom-1 duration-200">
               {line.type === "command" ? (
                 <span>
                   {prompt}
@@ -466,7 +478,7 @@ export function Terminal({
             <div className="leading-relaxed whitespace-pre-wrap">
               {prompt}
               <SyntaxHighlightedText text={currentText} />
-              <span className="ml-0.5 inline-block h-4 w-2 bg-neutral-300 align-middle" />
+              <span className="ml-0.5 inline-block h-[1.15em] w-[0.55em] bg-neutral-300 align-middle" />
             </div>
           )}
 
@@ -477,7 +489,7 @@ export function Terminal({
               {prompt}
               <span
                 className={cn(
-                  "inline-block h-4 w-2 bg-neutral-300 align-middle transition-opacity duration-100",
+                  "inline-block h-[1.15em] w-[0.55em] bg-neutral-300 align-middle transition-opacity duration-100",
                   !cursorVisible && "opacity-0",
                 )}
               />
