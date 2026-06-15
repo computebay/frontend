@@ -28,7 +28,7 @@ const EarlyAccess = () => {
 
     try {
       // 2. Send the exact body your backend expects
-      const res = await fetch('/api/send', {
+      const res = await fetch(import.meta.env.VITE_BACKEND_URL || '/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
